@@ -52,4 +52,64 @@ struct FitScrollView_Test: View {
 
 ```
 
+## SampleCode
+    
+```swift
+import SwiftUI
+import FitScrollView
 
+struct FitScrollViewTest: View {
+    @State var randomText : [String] = ["Cat","Apple", "pepper", "zero"]
+    
+    var body: some View {
+        ZStack(alignment: .topTrailing){
+            ZStack(alignment: .bottom){
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                FitScrollView(.vertical, showsIndicators: false, content: {
+                    VStack(alignment: .leading,spacing: 12){
+                        ForEach(0 ..< randomText.count , id:\.self) { index in
+                            HStack{
+                                Text(randomText[index])
+                                    .font(.body)
+                                    .padding(.horizontal, 12)
+                                
+                                Spacer()
+                            }
+                        }
+                    }
+                })
+                .padding(.all, 12)
+                .background(
+                    Color.white
+                        .cornerRadius(16)
+                        .ignoresSafeArea()
+                )
+            }
+            
+            Button(action: {
+                self.randomText.append(contentsOf: ["Cat","Apple", "pepper", "zero"])
+            }, label: {
+                Text("Add")
+            })
+            .padding(.horizontal, 12)
+            .padding(.vertical, 4)
+            .background(
+                Capsule()
+                    .foregroundColor(.white)
+                    .opacity(0.7)
+            )
+            .padding(.trailing, 16)
+        }
+        .animation(.spring())
+    }
+}
+
+struct FitScrollViewTest_Previews: PreviewProvider {
+    static var previews: some View {
+        FitScrollViewTest()
+    }
+}
+
+```
